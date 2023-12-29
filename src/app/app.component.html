@@ -1,0 +1,59 @@
+<div class="container-home">
+  <div class="row">
+    <div class="col">
+      <div class="form-group" id="search">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar ..." 
+          [(ngModel)]="filterTitles"
+          name="filterTitle"
+        >
+        
+      </div>
+      <form  (ngSubmit) = "onSendLimit()">
+        <input
+          type="number"
+          id="limit"
+          name="limit"
+          placeholder="Limit Products" 
+          [(ngModel)]="limit"
+          
+        >
+        <button type="submit">Obtener productos</button>
+      </form> 
+      <div>
+        <select 
+          [(ngModel)]="selectedValue" 
+          (change)="onSelectionChange($event)"
+          name="selectedValue"
+        >
+          <option 
+            *ngFor="let option of options" 
+            [value]="option.value">{{ option.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-striped " *ngIf="products.length > 0 || selectedValue != null">
+      <thead>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Category</th>       
+      </thead>
+      <tbody>
+        <tr *ngFor=" let product of products.slice(0,10) | filter:filterTitles">
+          <td>{{product.id}}</td>
+          <td>{{product.title}}</td>
+          <td>{{product.price}}</td>
+          <td>{{product.description}}</td>
+          <td>{{product.category}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
